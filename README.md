@@ -5,4 +5,4 @@ Repositório utilizado para desenvolvimento do projeto da discplina POO do curso
 * Pedro Andriotti - phab@cesar.school
 * Kauan Novello -kvns@cesar.school
 * Luís Otávio Mingatti - locm@cesar.school
-* Guilherme
+* Guilherme Silveira - gsa3@cesar.school
