@@ -1,3 +1,5 @@
+package br.gov.cesarschool.poo.bonusvendas.entidade;
+
 public Enum TipoResgate{
   PRODUTO(1, "Produto"),
   SERVICO(2, "Servico"),
