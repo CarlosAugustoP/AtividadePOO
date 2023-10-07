@@ -3,11 +3,11 @@ package br.gov.cesarschool.poo.bonusvendas.entidade;
 import java.time.LocalDateTime;
 
 public class CaixaDeBonus {
-    private longero;
+    private long numero;
     private double saldo;
     private LocalDateTime dataHoraAtualizacao;
 
-    CaixaDeBonus(longero){
+    public CaixaDeBonus(long numero){
         this.numero = numero;
     }
     

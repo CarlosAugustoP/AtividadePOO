@@ -1,16 +1,15 @@
 package br.gov.cesarschool.poo.bonusvendas.entidade;
+import java.time.LocalDateTime;
 
 public class LancamentoBonusDebito extends LancamentoBonus {
-  private String tipoResgate;
+  private TipoResgate tipoResgate;
 
-  public LancamentoBonusDebito(String tipoResgate, long numeroCaixaDeBonus, double valor, LocalDateTime dataHoraLancamento) {
+  public LancamentoBonusDebito(TipoResgate tipoResgate, long numeroCaixaDeBonus, double valor, LocalDateTime dataHoraLancamento) {
+    super(numeroCaixaDeBonus, valor, dataHoraLancamento);
     this.tipoResgate = tipoResgate;
-    this.numeroCaixaDeBonus = numeroCaixaDeBonus;
-    this.valor = valor;
-    this.dataHoraLancamento = dataHoraLancamento;
   }
 
-  public getTipoResgate() {
-    return getTipoResgate();
+  public TipoResgate getTipoResgate() {
+    return tipoResgate;
   }
 }

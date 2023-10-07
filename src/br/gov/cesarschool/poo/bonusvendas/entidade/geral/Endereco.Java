@@ -1,11 +1,13 @@
+package br.gov.cesarschool.poo.bonusvendas.entidade.geral;
+
 public class Endereco {
-    String logradouro;
-    int numero;
-    String complemento;
-    String cep;
-    String cidade;
-    String estado;
-    String pais;
+    private String logradouro;
+    private int numero;
+    private String complemento;
+    private String cep;
+    private String cidade;
+    private String estado;
+    private String pais;
 
     public Endereco(String logradouro, int numero, String complemento, String cep, String cidade, String estado, String pais){
         this.logradouro = logradouro;
@@ -18,45 +20,58 @@ public class Endereco {
     }
 
     public String getLogradouro(){
-        return this.logradouro;
+        return logradouro;
     }
+
     public void setLogradouro(String logradouro){
         this.logradouro = logradouro;
     }
+
     public int getNumero(){
-        return this.numero;
+        return numero;
     }
+
     public void setNumero(int numero){
         this.numero = numero;
     }
+
     public String getComplemento(){
-        return this.complemento;
+        return complemento;
     }   
+
     public void setComplemento(String complemento){
-        return this.complemento;
+        this.complemento = complemento;
     }
+
     public String getCep(){
-        return this.cep;
+        return cep;
     }
+
     public void setCep(String cep){
-        return this.cep;
+        this.cep = cep;
     }
-    public void getCidade(String cidade){
-        return this.cidade;
+
+    public String getCidade(){
+        return cidade;
     }
-    public String setCidade(){
-        return this.cidade;
+
+    public void setCidade(String cidade){
+        this.cidade = cidade;
     }
+
     public String getEstado(){
-        return this.estado;
+        return estado;
     }
+
     public void setEstado(String estado){
-        return this.estado;
+        this.estado = estado;
     }
+
     public String getPais(){
-        return this.pais;
+        return pais;
     }
+
     public void setPais(String pais){
-        return this.pais;
+        this.pais = pais;
     }
 }
