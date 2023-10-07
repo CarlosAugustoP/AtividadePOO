@@ -2,6 +2,7 @@ package br.gov.cesarschool.poo.bonusvendas.entidade;
 import java.time.LocalDateTime;
 
 public class LancamentoBonus {
+
     private long numeroCaixaDeBonus;
     private double valor;
     private LocalDateTime dataHoraLancamento;
