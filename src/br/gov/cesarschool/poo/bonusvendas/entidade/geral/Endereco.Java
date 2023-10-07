@@ -1,4 +1,3 @@
-
 public class Endereco {
     String logradouro;
     int numero;
@@ -18,7 +17,6 @@ public class Endereco {
         this.pais = pais;
     }
 
-    // crete getters and setters
     public String getLogradouro(){
         return this.logradouro;
     }
@@ -61,3 +59,4 @@ public class Endereco {
     public void setPais(String pais){
         return this.pais;
     }
+}

@@ -1,3 +1,4 @@
+package br.gov.cesarschool.poo.bonusvendas.entidade
 public class LancamentoBonus {
 
     private long numeroCaixaDeBonus;
@@ -21,4 +22,4 @@ public class LancamentoBonus {
     public LocalDateTime getDataHoraLancamento(){
         return dataHoraLancamento;
     }
- }
+}

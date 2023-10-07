@@ -2,30 +2,30 @@ package br.gov.cesarschool.poo.bonusvendas.entidade;
 
 import java.time.LocalDateTime;
 
-public class CaixaDeBonus() {
-    private long int numero;
-    private double saldo = 0;
+public class CaixaDeBonus {
+    private longero;
+    private double saldo;
     private LocalDateTime dataHoraAtualizacao;
-    
-    CaixaDeBonus(long int numero){
+
+    CaixaDeBonus(longero){
         this.numero = numero;
     }
     
     void creditar(double valor){
         this.saldo = this.saldo + valor;
-        this.dataHoraAtualizacao = LocaDateTime.now();
+        this.dataHoraAtualizacao = LocalDateTime.now();
     }
 
     void debitar(double valor){
         this.saldo = this.saldo - valor;
-        this.dataHoraAtualizacao = LocaDateTime.now();
+        this.dataHoraAtualizacao = LocalDateTime.now();
     }
 
-    long int getNumero(){
+    long getNumero(){
         return this.numero;
     }
 
-    void setNumero(long int numero){
+    void setNumero(long numero){
         this.numero = numero;
     }
 
@@ -37,7 +37,7 @@ public class CaixaDeBonus() {
         this.saldo = saldo;
     }
 
-    LocaDateTime getDataHoraAtualizacao(){
+    LocalDateTime getDataHoraAtualizacao(){
         return this.dataHoraAtualizacao;
     }
 
