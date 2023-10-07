@@ -1,4 +1,5 @@
-package br.gov.cesarschool.poo.bonusvendas.entidade
+package br.gov.cesarschool.poo.bonusvendas.entidade;
+
 public class LancamentoBonus {
 
     private long numeroCaixaDeBonus;
