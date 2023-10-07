@@ -4,12 +4,11 @@ public enum Sexo{
     MASCULINO(1,"Masculino"),
     FEMININO(2,"Feminino");
 
-    int codigo;
-    String descricao;
+    public int codigo;
+    public String descricao;
 
-    Sexo(int codigo, String descricao){
+    public Sexo(int codigo, String descricao){
         this.codigo = codigo;
         this.descricao = descricao;
     }
-
 }
