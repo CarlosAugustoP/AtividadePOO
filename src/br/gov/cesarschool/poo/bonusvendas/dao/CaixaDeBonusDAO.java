@@ -2,7 +2,7 @@ package br.gov.cesarschool.poo.bonusvendas.dao;
 
 import java.util.List;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
-import br.gov.cesarschool.poo.bonusvendas.PersistenciaObjetos.br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
+import br.gov.cesarschool.poo.bonusvendas.lib.PersistenciaObjetos.br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 
 public class CaixaDeBonusDAO{
         // Usando a Cadastro.Objetos.class
