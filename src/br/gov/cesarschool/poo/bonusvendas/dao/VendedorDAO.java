@@ -2,7 +2,7 @@ package br.gov.cesarschool.poo.bonusvendas.dao;
 import java.io.Serializable;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
-import   br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 
 
 public class VendedorDAO {
@@ -24,6 +24,16 @@ public class VendedorDAO {
             return false;
         } else {
             cadastro.alterar(vendedor, vendedor.getCpf());
+            return true;
+        }        
+    }
+
+    public boolean excluir(String cpf) {
+        Vendedor vendedorBusca = buscar(cpf);
+        if (vendedorBusca == null) {
+            return false;
+        } else {
+            cadastro.excluir(cpf);
             return true;
         }        
     }

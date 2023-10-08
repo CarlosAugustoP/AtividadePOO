@@ -1,47 +1,45 @@
 package br.gov.cesarschool.poo.bonusvendas.dao;
 
-import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
-import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Endereco;
-import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Sexo;
+import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 
 public class Main {
   public static void main(String[] args) {
-    VendedorDAO dao = new VendedorDAO();
+        CaixaDeBonusDAO dao = new CaixaDeBonusDAO();
 
-      // Criar um vendedor para teste
-      Endereco endereco = new Endereco("Rua da Paz", 123, "Apto 101", "12345-678", "Recife", "PE", "Brasil");
-      Vendedor vendedor = new Vendedor("12345678901", "João da Silva", Sexo.MASCULINO, java.time.LocalDate.now(), 5000.00, endereco);
+        // Criar um vendedor para teste
+        CaixaDeBonus caixa = new CaixaDeBonus(10);
 
-      // Incluir o vendedor
-      if (dao.incluir(vendedor)) {
-          System.out.println("Vendedor incluído com sucesso!");
-      } else {
-          System.out.println("Falha ao incluir o vendedor.");
-      }
+        if (dao.incluir(caixa)) {
+            System.out.println("Vendedor incluído com sucesso!");
+        } else {
+            System.out.println("Falha ao incluir o vendedor.");
+        }
 
-      // Alterar o vendedor
-      vendedor.setNomeCompleto("João Pedro da Silva");
-      if (dao.alterar(vendedor)) {
-          System.out.println("Vendedor alterado com sucesso!");
-      } else {
-          System.out.println("Falha ao alterar o vendedor.");
-      }
+        // // Alterar o vendedor
+        // vendedor.setNomeCompleto("João Pedro da Silva");
+        // if (dao.alterar(vendedor)) {
+        //     System.out.println("Vendedor alterado com sucesso!");
+        // } else {
+        //     System.out.println("Falha ao alterar o vendedor.");
+        // }
+        caixa = dao.buscar(10);
+        caixa.creditar(100);
+        // Buscar vendedor pelo CPF
+        dao.alterar(caixa);
+         caixa = dao.buscar(10);
+        if (caixa != null) {
+            System.out.println("Caixa encontrado: " + caixa.getSaldo());
+        } else {
+            System.out.println("Caixa não encontrado!");
+        }
+        System.out.println("Saldo: " + caixa.getSaldo());
+        // Listar todos os Caixaes
+        CaixaDeBonus[] todasCaixas = dao.buscarTodos();
+        System.out.println("Listando todos os caixa:");
+        for (CaixaDeBonus v : todasCaixas) {
+            System.out.println(v.getNumero());
+        }
 
-      // Buscar vendedor pelo CPF
-      Vendedor vendedorBuscado = dao.buscar("12345678901");
-      if (vendedorBuscado != null) {
-          System.out.println("Vendedor encontrado: " + vendedorBuscado.getNomeCompleto());
-      } else {
-          System.out.println("Vendedor não encontrado!");
-      }
-
-      // Listar todos os vendedores
-      Vendedor[] todosVendedores = dao.buscarTodos();
-      System.out.println("Listando todos os vendedores:");
-      for (Vendedor v : todosVendedores) {
-          System.out.println(v.getNomeCompleto());
-      }
-
-      // Você também pode adicionar a lógica de exclusão aqui se quiser.
+        // Você também pode adicionar a lógica de exclusão aqui se quiser.
   }
 }
