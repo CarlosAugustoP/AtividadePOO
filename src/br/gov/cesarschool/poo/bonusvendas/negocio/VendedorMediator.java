@@ -66,9 +66,16 @@ public class VendedorMediator {
     ResultadoInclusaoVendedor resultado = validar(vendedor);
     if(resultado.getMensagemErroValidacao() != null) {
       return resultado;
+    } 
+
+    boolean incluir = repositorioVendedor.incluir(vendedor);
+    if(incluir == false) {
+      return new ResultadoInclusaoVendedor(0, "Vendedor ja existente");
     }
-    repositorioVendedor.incluir(vendedor);
     long numeroCaixaDeBonus = caixaDeBonusMediator.gerarCaixaDeBonus(vendedor);
+    if(numeroCaixaDeBonus == 0) {
+      return new ResultadoInclusaoVendedor(0, "Caixa de bonus nao foi gerada");
+    }
     return new ResultadoInclusaoVendedor(numeroCaixaDeBonus, null);
   }
 
@@ -77,6 +84,9 @@ public class VendedorMediator {
     if(resultado.getMensagemErroValidacao() != null) {
       return resultado.getMensagemErroValidacao();
     }
+    if(repositorioVendedor.buscar(vendedor.getCpf()) == null) {
+      return "Vendedor inexistente";
+    };
     repositorioVendedor.alterar(vendedor);
     return null;
   }
