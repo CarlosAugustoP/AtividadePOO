@@ -41,5 +41,4 @@ public class CaixaDeBonus implements Serializable {
     LocalDateTime getDataHoraAtualizacao(){
         return this.dataHoraAtualizacao;
     }
-
 }
