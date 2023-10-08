@@ -16,7 +16,6 @@ public class VendedorMediator {
   }
 
   public ResultadoInclusaoVendedor validar(Vendedor vendedor) {
-    //ResultadoInclusaoVendedor resultado = new ResultadoInclusaoVendedor(0, null);
     if(vendedor.getCpf() == null || vendedor.getCpf().isEmpty()) {
       return new ResultadoInclusaoVendedor(0, "CPF nao informado");
     }
@@ -62,4 +61,27 @@ public class VendedorMediator {
     }
     return new ResultadoInclusaoVendedor(0, null);
   } 
+
+  public ResultadoInclusaoVendedor incluir(Vendedor vendedor) {
+    ResultadoInclusaoVendedor resultado = validar(vendedor);
+    if(resultado.getMensagemErroValidacao() != null) {
+      return resultado;
+    }
+    repositorioVendedor.incluir(vendedor);
+    long numeroCaixaDeBonus = caixaDeBonusMediator.gerarCaixaDeBonus(vendedor);
+    return new ResultadoInclusaoVendedor(numeroCaixaDeBonus, null);
+  }
+
+  public String alterar(Vendedor vendedor) {
+    ResultadoInclusaoVendedor resultado = validar(vendedor);
+    if(resultado.getMensagemErroValidacao() != null) {
+      return resultado.getMensagemErroValidacao();
+    }
+    repositorioVendedor.alterar(vendedor);
+    return null;
+  }
+
+  public Vendedor buscar(String cpf) {
+    return repositorioVendedor.buscar(cpf);
+  }
 }
