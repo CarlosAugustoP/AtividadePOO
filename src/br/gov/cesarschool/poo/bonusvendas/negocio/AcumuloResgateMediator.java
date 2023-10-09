@@ -7,17 +7,18 @@ import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
+import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 
 public class AcumuloResgateMediator {
   private static AcumuloResgateMediator instance;
 
-	public static AcumuloResgateMediator getInstancia() {
-		if (instance == null) {
-			instance = new AcumuloResgateMediator();
-		}
-		return instance;
-	}
+  public static AcumuloResgateMediator getInstancia() {
+    if (instance == null) {
+      instance = new AcumuloResgateMediator();
+    }
+    return instance;
+  }
 
   private CaixaDeBonusDAO repositorioCaixaBonus;
   private LancamentoBonusDAO repositorioLancamento;
@@ -37,9 +38,9 @@ public class AcumuloResgateMediator {
     long cpfNumerico = Long.parseLong(cpf);
 
     String numCaixaDeBonusStr = String.valueOf(cpfNumerico) + dataAtual.format(formatter);
-    
+
     long numCaixaDeBonus = Long.parseLong(numCaixaDeBonusStr);
-    
+
     CaixaDeBonus caixa = new CaixaDeBonus(numCaixaDeBonus);
 
     if (repositorioCaixaBonus.buscar(numCaixaDeBonus) == null) {
@@ -66,7 +67,7 @@ public class AcumuloResgateMediator {
     }
   }
 
-  public String resgatar(long numeroCaixaDeBonus, double valor) {
+  public String resgatar(long numeroCaixaDeBonus, double valor, TipoResgate tipoResgate) {
     if (valor <= 0) {
       return "Valor menor ou igual a zero";
     }

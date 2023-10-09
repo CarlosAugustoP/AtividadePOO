@@ -8,37 +8,40 @@ public class CaixaDeBonus implements Serializable {
     private double saldo;
     private LocalDateTime dataHoraAtualizacao;
 
-    public CaixaDeBonus(long numero){
+    public CaixaDeBonus(long numero) {
         this.numero = numero;
     }
-    
-    public void creditar(double valor){
+
+    public CaixaDeBonus(Object numero2) {
+    }
+
+    public void creditar(double valor) {
         this.saldo = this.saldo + valor;
         this.dataHoraAtualizacao = LocalDateTime.now();
     }
 
-    public void debitar(double valor){
+    public void debitar(double valor) {
         this.saldo = this.saldo - valor;
         this.dataHoraAtualizacao = LocalDateTime.now();
     }
 
-    public long getNumero(){
+    public long getNumero() {
         return this.numero;
     }
 
-    public void setNumero(long numero){
+    public void setNumero(long numero) {
         this.numero = numero;
     }
 
-    public double getSaldo(){
+    public double getSaldo() {
         return this.saldo;
     }
 
-    public void setSaldo(double saldo){
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
 
-    public LocalDateTime getDataHoraAtualizacao(){
+    public LocalDateTime getDataHoraAtualizacao() {
         return this.dataHoraAtualizacao;
     }
 }

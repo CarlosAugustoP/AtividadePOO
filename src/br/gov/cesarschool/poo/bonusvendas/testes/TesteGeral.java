@@ -30,22 +30,23 @@ public class TesteGeral {
 	protected static final String CPF_VALIDO = "83323012461";
 	protected static final String OUTRO_CPF_VALIDO = "78924931075";
 	protected CadastroObjetos cadastroVend = new CadastroObjetos(Vendedor.class);
-	protected CadastroObjetos cadastroCaixaBonus = new CadastroObjetos(CaixaDeBonus.class); 
-
+	protected CadastroObjetos cadastroCaixaBonus = new CadastroObjetos(CaixaDeBonus.class);
 
 	protected void excluirVendedoresCaixasBonusLancamentos() {
 		excluirArquivosDiretorio(new File(DIR_VENDEDOR));
 		excluirArquivosDiretorio(new File(DIR_CAIXA_DE_BONUS));
 		excluirArquivosDiretorio(new File(DIR_LANCAMENTOS));
 	}
+
 	protected void excluirArquivosDiretorio(File dir) {
 		File[] arqs = dir.listFiles();
 		if (arqs != null && arqs.length > 0) {
 			for (File file : arqs) {
 				file.delete();
 			}
-		}		
+		}
 	}
+
 	protected int obterQtdArquivosDir(String caminhoDir) {
 		File[] files = (new File(caminhoDir)).listFiles();
 		if (files == null) {

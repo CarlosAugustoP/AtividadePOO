@@ -10,7 +10,7 @@ public class LancamentoBonus implements Serializable {
     private double valor;
     private LocalDateTime dataHoraLancamento;
 
-    public LancamentoBonus(long numeroCaixaDeBonus, double valor, LocalDateTime dataHoraLancamento){
+    public LancamentoBonus(long numeroCaixaDeBonus, double valor, LocalDateTime dataHoraLancamento) {
         this.numeroCaixaDeBonus = numeroCaixaDeBonus;
         this.valor = valor;
         this.dataHoraLancamento = dataHoraLancamento;
@@ -19,15 +19,15 @@ public class LancamentoBonus implements Serializable {
     public LancamentoBonus(long numCaixaDeBonus, double valor2, LocalDate now) {
     }
 
-    public long getNumeroCaixaDeBonus(){
+    public long getNumeroCaixaDeBonus() {
         return numeroCaixaDeBonus;
     }
 
-    public double getValor(){
+    public double getValor() {
         return valor;
     }
 
-    public LocalDateTime getDataHoraLancamento(){
+    public LocalDateTime getDataHoraLancamento() {
         return dataHoraLancamento;
     }
 }
