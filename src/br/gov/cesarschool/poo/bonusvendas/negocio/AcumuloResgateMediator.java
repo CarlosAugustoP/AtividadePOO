@@ -10,11 +10,19 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 
 public class AcumuloResgateMediator {
+  private static AcumuloResgateMediator instance;
+
+	public static AcumuloResgateMediator getInstancia() {
+		if (instance == null) {
+			instance = new AcumuloResgateMediator();
+		}
+		return instance;
+	}
 
   private CaixaDeBonusDAO repositorioCaixaBonus;
   private LancamentoBonusDAO repositorioLancamento;
 
-  public AcumuloResgateMediator() {
+  private AcumuloResgateMediator() {
     this.repositorioCaixaBonus = new CaixaDeBonusDAO();
     this.repositorioLancamento = new LancamentoBonusDAO();
   }
@@ -26,12 +34,12 @@ public class AcumuloResgateMediator {
 
     cpf = cpf.replaceAll("[^0-9]", "");
 
-    int cpfNumerico = Integer.parseInt(cpf);
+    long cpfNumerico = Long.parseLong(cpf);
 
     String numCaixaDeBonusStr = String.valueOf(cpfNumerico) + dataAtual.format(formatter);
-
+    
     long numCaixaDeBonus = Long.parseLong(numCaixaDeBonusStr);
-
+    
     CaixaDeBonus caixa = new CaixaDeBonus(numCaixaDeBonus);
 
     if (repositorioCaixaBonus.buscar(numCaixaDeBonus) == null) {

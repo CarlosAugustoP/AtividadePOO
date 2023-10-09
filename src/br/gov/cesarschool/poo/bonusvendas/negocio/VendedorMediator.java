@@ -7,12 +7,21 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 import br.gov.cesarschool.poo.bonusvendas.negocio.geral.ValidadorCPF;
 
 public class VendedorMediator {
+  private static VendedorMediator instance;
+
+	public static VendedorMediator getInstancia() {
+		if (instance == null) {
+			instance = new VendedorMediator();
+		}
+		return instance;
+	}
+
   private VendedorDAO repositorioVendedor;
   private AcumuloResgateMediator caixaDeBonusMediator;
 
   public VendedorMediator() {
     repositorioVendedor = new VendedorDAO();
-    caixaDeBonusMediator = new AcumuloResgateMediator();
+    caixaDeBonusMediator = AcumuloResgateMediator.getInstancia();
   }
 
   public ResultadoInclusaoVendedor validar(Vendedor vendedor) {
