@@ -69,7 +69,7 @@ public class AcumuloResgateMediator {
 	}
 
 	 public String acumularBonus(long num, double valor) {
-		 LocalDateTime dataHoraLancamento = LocalDateTime.now();
+		 LocalDateTime dataHoraLancamento = LocalDateTime.now(); //obter a data e hora do lançamento
 		    if (valor <= 0) {
 		      return "Valor menor ou igual a zero";
 		    }
@@ -79,6 +79,7 @@ public class AcumuloResgateMediator {
 		    }else {
 		      caixaDeBonus.creditar(valor);
 		      repositorioCaixaBonus.alterar(caixaDeBonus);
+		      //criar um novo lançamento de bônus com a data e hora do lançamento
 		      LancamentoBonusCredito lancamento = new LancamentoBonusCredito(num, valor, dataHoraLancamento);
 		      repositorioLancamento.incluir(lancamento);
 		      return null;
