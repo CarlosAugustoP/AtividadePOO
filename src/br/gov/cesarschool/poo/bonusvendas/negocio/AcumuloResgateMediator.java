@@ -2,23 +2,23 @@ package br.gov.cesarschool.poo.bonusvendas.negocio;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
 
-//import java.time.LocalDate;
+import java.time.LocalDate;
 
-//import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
-//import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
-//import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
+import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
+import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
+import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
-//import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 
 public class AcumuloResgateMediator {
-	// Instância única da classe (Singleton)
 	private static AcumuloResgateMediator instance;
 
 //     Atributos privados
@@ -28,8 +28,8 @@ public class AcumuloResgateMediator {
 	// Construtor privado
 	private AcumuloResgateMediator() {
 		// Inicializa os atributos com novas instâncias
-		repositorioCaixaDeBonus = new CaixaDeBonusDAO();
-		repositorioLancamento = new LancamentoBonusDAO();
+		this.repositorioCaixaDeBonus = new CaixaDeBonusDAO();
+		this.repositorioLancamento = new LancamentoBonusDAO();
 	}
 
 	/***
@@ -40,25 +40,31 @@ public class AcumuloResgateMediator {
 	public static AcumuloResgateMediator getInstancia() {
 		if (instance == null) {
 			instance = new AcumuloResgateMediator();
-			System.out.println("teste");
+
 		}
 		return instance;
 	}
 
 	public long gerarCaixaDeBonus(Vendedor vendedor) {
-		if (vendedor == null) {
-			return 0; // Retorna zero se o vendedor for nulo
+		String cpf = vendedor.getCpf();
+		cpf = cpf.replaceAll("[^0-9]", "");
+		if (cpf.length() < 2) {
+			return 0;
 		}
-
-		LocalDate dataAtual = LocalDate.now();
-		String numeroCaixaDeBonus = vendedor.getCpf() + String.format("%04d%02d%02d", dataAtual.getYear(),
-				dataAtual.getMonthValue(), dataAtual.getDayOfMonth());
-
-		CaixaDeBonus caixaDeBonus = new CaixaDeBonus(Long.parseLong(numeroCaixaDeBonus));
-		if (repositorioCaixaDeBonus.incluir(caixaDeBonus)) {
-			return Long.parseLong(numeroCaixaDeBonus);
-		} else {
-			return 0; // Retorna zero se a caixa de bônus não for incluída no repositório
+		String cpfNumerico = cpf.substring(0, cpf.length() - 2);
+		String hoje = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		String numCaixaDeBonusString = cpfNumerico + hoje;
+		try {
+			long numCaixaDeBonus = Long.parseLong(numCaixaDeBonusString);
+			if (repositorioCaixaDeBonus.buscar(numCaixaDeBonus) == null) {
+				CaixaDeBonus caixa = new CaixaDeBonus(numCaixaDeBonus);
+				repositorioCaixaDeBonus.incluir(caixa);
+				return numCaixaDeBonus;
+			} else {
+				return 0;
+			}
+		} catch (NumberFormatException e) {
+			return 0;
 		}
 	}
 
@@ -102,8 +108,9 @@ public class AcumuloResgateMediator {
 
 		caixaDeBonus.debitar(valor); // Usando o método debitar da CaixaDeBonus
 		repositorioCaixaDeBonus.alterar(caixaDeBonus);
-		//LancamentoBonusResgate lancamentoResgate = new LancamentoBonusResgate(caixaDeBonus, valor, tipo);
-		//repositorioLancamento.incluirLancamento(lancamentoResgate);
+		// LancamentoBonusResgate lancamentoResgate = new
+		// LancamentoBonusResgate(caixaDeBonus, valor, tipo);
+		// repositorioLancamento.incluirLancamento(lancamentoResgate);
 
 		return null;
 	}
