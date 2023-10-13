@@ -22,13 +22,13 @@ public class AcumuloResgateMediator {
 	private static AcumuloResgateMediator instance;
 
 //     Atributos privados
-	private CaixaDeBonusDAO repositorioCaixaDeBonus;
+	private CaixaDeBonusDAO repositorioCaixaBonus;
 	private LancamentoBonusDAO repositorioLancamento;
 
 	// Construtor privado
 	private AcumuloResgateMediator() {
 		// Inicializa os atributos com novas instâncias
-		this.repositorioCaixaDeBonus = new CaixaDeBonusDAO();
+		this.repositorioCaixaBonus = new CaixaDeBonusDAO();
 		this.repositorioLancamento = new LancamentoBonusDAO();
 	}
 
@@ -56,9 +56,9 @@ public class AcumuloResgateMediator {
 		String numCaixaDeBonusString = cpfNumerico + hoje;
 		try {
 			long numCaixaDeBonus = Long.parseLong(numCaixaDeBonusString);
-			if (repositorioCaixaDeBonus.buscar(numCaixaDeBonus) == null) {
+			if (repositorioCaixaBonus.buscar(numCaixaDeBonus) == null) {
 				CaixaDeBonus caixa = new CaixaDeBonus(numCaixaDeBonus);
-				repositorioCaixaDeBonus.incluir(caixa);
+				repositorioCaixaBonus.incluir(caixa);
 				return numCaixaDeBonus;
 			} else {
 				return 0;
@@ -68,36 +68,30 @@ public class AcumuloResgateMediator {
 		}
 	}
 
-	public String acumularBonus(long numeroCaixaDeBonus, double valor) {
-		if (valor <= 0) {
-			return "Valor menor ou igual a zero";
-		}
-
-		CaixaDeBonus caixaDeBonus = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
-		if (caixaDeBonus == null) {
-			return "Caixa de bônus inexistente";
-		}
-
-		caixaDeBonus.creditar(valor);
-		repositorioCaixaDeBonus.alterar(caixaDeBonus);
-
-		// Obtenha a data e hora do lançamento
-		LocalDateTime dataHoraLancamento = LocalDateTime.now();
-
-		// Crie um novo lançamento de bônus com a data e hora do lançamento
-		LancamentoBonusCredito lancamentoCredito = new LancamentoBonusCredito(numeroCaixaDeBonus, valor,
-				dataHoraLancamento);
-		repositorioLancamento.incluir(lancamentoCredito);
-
-		return null;
-	}
+	 public String acumularBonus(long num, double valor) {
+		 LocalDateTime dataHoraLancamento = LocalDateTime.now();
+		    if (valor <= 0) {
+		      return "Valor menor ou igual a zero";
+		    }
+		    CaixaDeBonus caixaDeBonus = repositorioCaixaBonus.buscar(num);
+		    if (caixaDeBonus == null) {
+		    	return "Caixa de bonus inexistente";
+		    }else {
+		      caixaDeBonus.creditar(valor);
+		      repositorioCaixaBonus.alterar(caixaDeBonus);
+		      LancamentoBonusCredito lancamento = new LancamentoBonusCredito(num, valor, dataHoraLancamento);
+		      repositorioLancamento.incluir(lancamento);
+		      return null;
+		   
+		    }
+		  }
 
 	public String resgatar(long numeroCaixaDeBonus, double valor, TipoResgate tipo) {
 		if (valor <= 0) {
 			return "Valor menor ou igual a zero";
 		}
 
-		CaixaDeBonus caixaDeBonus = repositorioCaixaDeBonus.buscar(numeroCaixaDeBonus);
+		CaixaDeBonus caixaDeBonus = repositorioCaixaBonus.buscar(numeroCaixaDeBonus);
 		if (caixaDeBonus == null) {
 			return "Caixa de bonus inexistente";
 		}
@@ -107,7 +101,7 @@ public class AcumuloResgateMediator {
 		}
 
 		caixaDeBonus.debitar(valor); // Usando o método debitar da CaixaDeBonus
-		repositorioCaixaDeBonus.alterar(caixaDeBonus);
+		repositorioCaixaBonus.alterar(caixaDeBonus);
 		// LancamentoBonusResgate lancamentoResgate = new
 		// LancamentoBonusResgate(caixaDeBonus, valor, tipo);
 		// repositorioLancamento.incluirLancamento(lancamentoResgate);
