@@ -1,47 +1,38 @@
 package br.gov.cesarschool.poo.bonusvendas.entidade;
 
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class CaixaDeBonus implements Serializable {
-    private long numero;
-    private double saldo;
-    private LocalDateTime dataHoraAtualizacao;
+	private static final long serialVersionUID = 1L;
+	private long numero;
+	private double saldo;
+	private LocalDateTime dataHoraAtualizacao;
 
-    public CaixaDeBonus(long numero) {
-        this.numero = numero;
-    }
+	public CaixaDeBonus(long numero) {
+		super();
+		this.numero = numero;
+	}
 
-    public CaixaDeBonus(Object numero2) {
-    }
+	public long getNumero() {
+		return numero;
+	}
 
-    public void creditar(double valor) {
-        this.saldo = this.saldo + valor;
-        this.dataHoraAtualizacao = LocalDateTime.now();
-    }
+	public double getSaldo() {
+		return saldo;
+	}
 
-    public void debitar(double valor) {
-        this.saldo = this.saldo - valor;
-        this.dataHoraAtualizacao = LocalDateTime.now();
-    }
+	public LocalDateTime getDataHoraAtualizacao() {
+		return dataHoraAtualizacao;
+	}
 
-    public long getNumero() {
-        return this.numero;
-    }
+	public void creditar(double valor) {
+		saldo = saldo + valor;
+		dataHoraAtualizacao = LocalDateTime.now();
+	}
 
-    public void setNumero(long numero) {
-        this.numero = numero;
-    }
-
-    public double getSaldo() {
-        return this.saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
-    public LocalDateTime getDataHoraAtualizacao() {
-        return this.dataHoraAtualizacao;
-    }
+	public void debitar(double valor) {
+		saldo = saldo - valor;
+		dataHoraAtualizacao = LocalDateTime.now();
+	}
 }
