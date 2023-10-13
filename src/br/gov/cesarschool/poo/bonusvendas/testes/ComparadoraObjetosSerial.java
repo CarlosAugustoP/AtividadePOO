@@ -18,7 +18,7 @@ class ComparadoraObjetosSerial {
 
 		ObjectOutputStream oos2 = null;
 
-		boolean ret = true;
+		boolean ret =true;
 
 		try {
 

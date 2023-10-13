@@ -14,7 +14,7 @@ public class CaixaDeBonusDAO {
 		if (prodBusca != null) {
 			return false;
 		} else {
-			cadastro.incluir(prod, BRANCO + prod.getNumero());
+			cadastro.incluir(prod, String.valueOf(prod.getNumero()));
 			return true;
 		}
 	}
@@ -24,10 +24,19 @@ public class CaixaDeBonusDAO {
 		if (prodBusca == null) {
 			return false;
 		} else {
-			cadastro.alterar(prod, BRANCO + prod.getNumero());
+			cadastro.alterar(prod, String.valueOf(prod.getNumero()));
 			return true;
 		}
 	}
+	public boolean excluir(long numero) {
+        CaixaDeBonus caixaBusca = buscar(numero);
+        if (caixaBusca == null) {
+            return false;
+        } else {
+            cadastro.excluir(String.valueOf(numero));
+            return true;
+        }        
+    }
 
 	public CaixaDeBonus buscar(long codigo) {
 		// Esta operação entre () vai ter significado mais à frente!

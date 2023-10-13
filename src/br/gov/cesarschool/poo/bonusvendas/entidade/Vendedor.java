@@ -76,4 +76,9 @@ public class Vendedor implements Serializable {
 		int idade = periodo.getYears();
 		return idade;
 	}
+
+	public String getNomeCompleto() {
+		
+		return nomeCompleto;
+	}
 }
