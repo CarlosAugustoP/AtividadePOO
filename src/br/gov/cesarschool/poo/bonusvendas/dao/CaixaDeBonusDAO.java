@@ -8,6 +8,7 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 public class CaixaDeBonusDAO {
 	private static final String BRANCO = "";
 	private CadastroObjetos cadastro = new CadastroObjetos(CaixaDeBonus.class);
+	
 
 	public boolean incluir(CaixaDeBonus prod) {
 		CaixaDeBonus prodBusca = buscar(prod.getNumero());
