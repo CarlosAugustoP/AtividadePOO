@@ -63,60 +63,78 @@ CaixaDeBonusMediator.*/
 	}
   
   public ResultadoInclusaoVendedor validar(Vendedor vendedor) {
-	  String cpf = vendedor.getCpf();
-	  String nomeCompleto = vendedor.getNomeCompleto();
-	  LocalDate dataNascimento = vendedor.getDataNascimento();
-	  double renda = vendedor.getRenda();
-	  if (cpf == null || cpf.isEmpty()) {
-	    return new ResultadoInclusaoVendedor(0, "CPF nao informado");
-	  }
-	  if (ValidadorCPF.ehCpfValido(vendedor.getCpf()) == false) {
-	    return new ResultadoInclusaoVendedor(0, "CPF invalido");
-	  }
-	  if (nomeCompleto == null || nomeCompleto.isEmpty()) {
-	    return new ResultadoInclusaoVendedor(0, "Nome completo nao informado");
-	  }
-	  if (vendedor.getSexo() == null) {
-	    return new ResultadoInclusaoVendedor(0, "Sexo nao informado");
-	  }
-	  if (dataNascimento == null) {
-	    return new ResultadoInclusaoVendedor(0, "Data de nascimento nao informada");
-	  }
-	  if (dataNascimento.isAfter(LocalDate.now().minusYears(17))) {
-	    return new ResultadoInclusaoVendedor(0, "Data de nascimento invalida");
-	  }
-	  if (renda < 0) {
-	    return new ResultadoInclusaoVendedor(0, "Renda menor que zero");
-	  }
-	  if (vendedor.getEndereco() == null) {
-	    return new ResultadoInclusaoVendedor(0, "Endereco nao informado");
-	  }
-	  if (vendedor.getEndereco().getLogradouro() == null || vendedor.getEndereco().getLogradouro().isEmpty()) {
-	    return new ResultadoInclusaoVendedor(0, "Logradouro nao informado");
-	  }
-	  if (vendedor.getEndereco().getLogradouro().length() < 4) {
-	    return new ResultadoInclusaoVendedor(0, "Logradouro tem menos de 04 caracteres");
-	  }
-	  if (vendedor.getEndereco().getNumero() < 0) {
-	    return new ResultadoInclusaoVendedor(0, "Numero menor que zero");
-	  }
-	  if (vendedor.getEndereco().getCidade() == null) {
-	    return new ResultadoInclusaoVendedor(0, "Cidade nao informada");
-	  }
-	  if (vendedor.getEndereco().getEstado().isEmpty()) {
-	    return new ResultadoInclusaoVendedor(0, "Estado nao informado");
-	  }
-	  if (vendedor.getEndereco().getPais().isEmpty()) {
-	    return new ResultadoInclusaoVendedor(0, "Pais nao informado");
-	  } else {
-	    return new ResultadoInclusaoVendedor(0, null);
-	  }
+	    String cpf = vendedor.getCpf();
+	    String nomeCompleto = vendedor.getNomeCompleto();
+	    LocalDate dataNascimento = vendedor.getDataNascimento();
+	    double renda = vendedor.getRenda();
+	    LocalDate today = LocalDate.now().minusYears(17);
+	    
+	    if (dataNascimento == null) {
+	        return new ResultadoInclusaoVendedor(0, "Data de nascimento nao informada");
+	    }
+
+	    if (vendedor.getEndereco().getPais() == null || vendedor.getEndereco().getPais().trim().isEmpty()) {
+	        return new ResultadoInclusaoVendedor(0, "Pais nao informado");
+	    }
+
+	    if (vendedor.getCpf() == null || cpf.trim().isEmpty()) {
+	        return new ResultadoInclusaoVendedor(0, "CPF nao informado");
+	    }
+
+	    if (vendedor.getSexo() == null) {
+	        return new ResultadoInclusaoVendedor(0, "Sexo nao informado");
+	    }
+
+	    if (dataNascimento.isAfter(today)) {
+	        return new ResultadoInclusaoVendedor(0, "Data de nascimento invalida");
+	    }
+
+	    if (vendedor.getEndereco() == null) {
+	        return new ResultadoInclusaoVendedor(0, "Endereco nao informado");
+	    }
+
+	    if (vendedor.getEndereco().getNumero() < 0) {
+	        return new ResultadoInclusaoVendedor(0, "Numero menor que zero");
+	    }
+
+	    if (nomeCompleto == null) {
+	        return new ResultadoInclusaoVendedor(0, "Nome completo nao informado");
+	    }
+
+	    if (vendedor.getEndereco().getLogradouro().length() < 4) {
+	        return new ResultadoInclusaoVendedor(0, "Logradouro tem menos de 04 caracteres");
+	    }
+
+	    if (vendedor.getEndereco().getLogradouro() == null || vendedor.getEndereco().getLogradouro().trim().isEmpty()) {
+	        return new ResultadoInclusaoVendedor(0, "Logradouro nao informado");
+	    }
+
+	    if (vendedor.getEndereco().getCidade() == null || vendedor.getEndereco().getCidade().trim().isEmpty()) {
+	        return new ResultadoInclusaoVendedor(0, "Cidade nao informada");
+	    }
+
+	    if (vendedor.getEndereco().getEstado() == null || vendedor.getEndereco().getEstado().trim().isEmpty()) {
+	        return new ResultadoInclusaoVendedor(0, "Estado nao informado");
+	    }
+
+	    if (ValidadorCPF.ehCpfValido(cpf) == false) {
+	        return new ResultadoInclusaoVendedor(0, "CPF invalido");
+	    }
+
+	    
+	    if (renda < 0) {
+	        return new ResultadoInclusaoVendedor(0, "Renda menor que zero");
+	    }
+
+	    else {
+	        return new ResultadoInclusaoVendedor(0, null);
+	    }
 	}
 
+	  }
   
 
 
 
 
  
-}
