@@ -40,6 +40,7 @@ public class AcumuloResgateMediator {
 	public static AcumuloResgateMediator getInstancia() {
 		if (instance == null) {
 			instance = new AcumuloResgateMediator();
+			System.out.println("teste");
 		}
 		return instance;
 	}
