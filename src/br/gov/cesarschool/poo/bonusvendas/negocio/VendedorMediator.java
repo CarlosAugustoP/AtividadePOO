@@ -72,6 +72,9 @@ CaixaDeBonusMediator.*/
 	    if (dataNascimento == null) {
 	        return new ResultadoInclusaoVendedor(0, "Data de nascimento nao informada");
 	    }
+	    if (vendedor.getEndereco() == null) {
+	        return new ResultadoInclusaoVendedor(0, "Endereco nao informado");
+	    }
 
 	    if (vendedor.getEndereco().getPais() == null || vendedor.getEndereco().getPais().trim().isEmpty()) {
 	        return new ResultadoInclusaoVendedor(0, "Pais nao informado");
@@ -87,10 +90,6 @@ CaixaDeBonusMediator.*/
 
 	    if (dataNascimento.isAfter(today)) {
 	        return new ResultadoInclusaoVendedor(0, "Data de nascimento invalida");
-	    }
-
-	    if (vendedor.getEndereco() == null) {
-	        return new ResultadoInclusaoVendedor(0, "Endereco nao informado");
 	    }
 
 	    if (vendedor.getEndereco().getNumero() < 0) {
