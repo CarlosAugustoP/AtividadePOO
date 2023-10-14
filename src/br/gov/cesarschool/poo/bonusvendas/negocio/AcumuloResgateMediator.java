@@ -21,7 +21,7 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 public class AcumuloResgateMediator {
 	private static AcumuloResgateMediator instance;
 
-//     Atributos privados
+//Atributos privados
 	private CaixaDeBonusDAO repositorioCaixaBonus;
 	private LancamentoBonusDAO repositorioLancamento;
 
