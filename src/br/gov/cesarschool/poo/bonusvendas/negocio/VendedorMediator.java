@@ -53,12 +53,12 @@ CaixaDeBonusMediator.*/
 	        long numeroCaixaDeBonus = caixaDeBonusMediator.gerarCaixaDeBonus(vendedor);
 
 	        if (numeroCaixaDeBonus == 0) {
-	            return new ResultadoInclusaoVendedor(0, "Caixa de bônus não foi gerada");
+	            return new ResultadoInclusaoVendedor(0, "Caixa de bonus não foi gerada");
 	        }
 
 	        return new ResultadoInclusaoVendedor(numeroCaixaDeBonus, null);
 	    } else {
-	        return new ResultadoInclusaoVendedor(0, "Vendedor já existente");
+	        return new ResultadoInclusaoVendedor(0, "Vendedor ja existente");
 	    }
 	}
   
