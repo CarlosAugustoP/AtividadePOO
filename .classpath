@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/junit-platform-console-standalone-1.10.0.jar"/>
 	<classpathentry kind="lib" path="lib/oblesqbom.jar"/>
 	<classpathentry kind="lib" path="lib/PersistenciaObjetos.jar"/>
+	<classpathentry kind="lib" path="D:/java-2023-09/eclipse/plugins/swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
