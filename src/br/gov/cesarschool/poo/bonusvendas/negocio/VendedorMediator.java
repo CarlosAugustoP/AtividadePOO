@@ -69,6 +69,9 @@ CaixaDeBonusMediator.*/
 	    double renda = vendedor.getRenda();
 	    LocalDate today = LocalDate.now().minusYears(17);
 	    
+	    if (vendedor.getCpf() == null || cpf.trim().isEmpty()) {
+	        return new ResultadoInclusaoVendedor(0, "CPF nao informado");
+	    }
 	    if (dataNascimento == null) {
 	        return new ResultadoInclusaoVendedor(0, "Data de nascimento nao informada");
 	    }
@@ -80,9 +83,7 @@ CaixaDeBonusMediator.*/
 	        return new ResultadoInclusaoVendedor(0, "Pais nao informado");
 	    }
 
-	    if (vendedor.getCpf() == null || cpf.trim().isEmpty()) {
-	        return new ResultadoInclusaoVendedor(0, "CPF nao informado");
-	    }
+	   
 
 	    if (vendedor.getSexo() == null) {
 	        return new ResultadoInclusaoVendedor(0, "Sexo nao informado");
@@ -115,13 +116,13 @@ CaixaDeBonusMediator.*/
 	        return new ResultadoInclusaoVendedor(0, "Estado nao informado");
 	    }
 
-	    if (ValidadorCPF.ehCpfValido(cpf) == false) {
-	        return new ResultadoInclusaoVendedor(0, "CPF invalido");
-	    }
-
+	   
 	    
 	    if (renda < 0) {
 	        return new ResultadoInclusaoVendedor(0, "Renda menor que zero");
+	    }
+	    if (ValidadorCPF.ehCpfValido(cpf) == false) {
+	        return new ResultadoInclusaoVendedor(0, "CPF invalido");
 	    }
 
 	    else {
