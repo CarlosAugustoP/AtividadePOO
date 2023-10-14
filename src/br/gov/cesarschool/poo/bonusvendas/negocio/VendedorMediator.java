@@ -115,8 +115,6 @@ CaixaDeBonusMediator.*/
 	    if (vendedor.getEndereco().getEstado() == null || vendedor.getEndereco().getEstado().trim().isEmpty()) {
 	        return new ResultadoInclusaoVendedor(0, "Estado nao informado");
 	    }
-
-	   
 	    
 	    if (renda < 0) {
 	        return new ResultadoInclusaoVendedor(0, "Renda menor que zero");

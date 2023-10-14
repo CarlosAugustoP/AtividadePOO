@@ -2,34 +2,35 @@ package br.gov.cesarschool.poo.bonusvendas.negocio.geral;
 
 public class ValidadorCPF {
 
-    private ValidadorCPF() {
-       
-    }
+	public static boolean ehCpfValido(String CPF) {
+		if (CPF == null || CPF.length() != 11)
+			return false;
 
-    public static boolean ehCpfValido(String cpf) {
-        if (cpf == null || !cpf.matches("\\d{11}")) {
-            return false;
-        }
-        int[] digitos = new int[9];
-        for (int i = 0; i < 9; i++) {
-            digitos[i] = Character.getNumericValue(cpf.charAt(i));
-        }
-        int primeiroDigito = calcularDigitoVerificador(digitos, 10);
-        int segundoDigito = calcularDigitoVerificador(digitos, 11);
-        return primeiroDigito == Character.getNumericValue(cpf.charAt(9)) &&
-               segundoDigito == Character.getNumericValue(cpf.charAt(10));
-    }
+		if (CPF.matches("(\\d)\\1{10}"))
+			return false;
 
-    private static int calcularDigitoVerificador(int[] digitos, int pesoInicial) {
-        int soma = 0;
-        int peso = pesoInicial;
+		int[] digits = new int[11];
 
-        for (int digito : digitos) {
-            soma += digito * peso;
-            peso--;
-        }
+		for (int i = 0; i < 11; i++) {
+			digits[i] = CPF.charAt(i) - '0';
+		}
+		int sm = 0;
+		for (int i = 0; i < 9; i++) {
+			sm += digits[i] * (10 - i);
+		}
 
-        int resto = soma % 11;
-        return (resto < 2) ? 0 : (11 - resto);
-    }
+		int r = 11 - (sm % 11);
+		char dig10 = (r == 10 || r == 11) ? '0' : (char) (r + '0');
+
+		sm = 0;
+		for (int i = 0; i < 10; i++) {
+			sm += digits[i] * (11 - i);
+		}
+
+		r = 11 - (sm % 11);
+		char dig11 = (r == 10 || r == 11) ? '0' : (char) (r + '0');
+
+		return dig10 == CPF.charAt(9) && dig11 == CPF.charAt(10);
+	}
+
 }
