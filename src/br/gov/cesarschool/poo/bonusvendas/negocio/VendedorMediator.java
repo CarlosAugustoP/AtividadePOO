@@ -99,15 +99,14 @@ CaixaDeBonusMediator.*/
 	    if (nomeCompleto == null) {
 	        return new ResultadoInclusaoVendedor(0, "Nome completo nao informado");
 	    }
-
+	    if (vendedor.getEndereco().getLogradouro() == null || vendedor.getEndereco().getLogradouro().trim().isEmpty()) {
+	        return new ResultadoInclusaoVendedor(0, "Logradouro nao informado");
+	    }
 	    if (vendedor.getEndereco().getLogradouro().length() < 4) {
 	        return new ResultadoInclusaoVendedor(0, "Logradouro tem menos de 04 caracteres");
 	    }
 
-	    if (vendedor.getEndereco().getLogradouro() == null || vendedor.getEndereco().getLogradouro().trim().isEmpty()) {
-	        return new ResultadoInclusaoVendedor(0, "Logradouro nao informado");
-	    }
-
+	   
 	    if (vendedor.getEndereco().getCidade() == null || vendedor.getEndereco().getCidade().trim().isEmpty()) {
 	        return new ResultadoInclusaoVendedor(0, "Cidade nao informada");
 	    }
