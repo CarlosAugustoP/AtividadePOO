@@ -9,6 +9,5 @@
 	<classpathentry kind="lib" path="lib/junit-platform-console-standalone-1.10.0.jar"/>
 	<classpathentry kind="lib" path="lib/oblesqbom.jar"/>
 	<classpathentry kind="lib" path="lib/PersistenciaObjetos.jar"/>
-	<classpathentry kind="lib" path="D:/java-2023-09/eclipse/plugins/swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

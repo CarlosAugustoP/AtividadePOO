@@ -23,8 +23,9 @@ public class CaixaDeBonus implements Serializable {
 	}
 
 	public LocalDateTime getDataHoraAtualizacao() {
-		return dataHoraAtualizacao;
-	}
+        this.dataHoraAtualizacao = LocalDateTime.now();
+        return this.dataHoraAtualizacao;
+    }
 
 	public void creditar(double valor) {
 		saldo = saldo + valor;
