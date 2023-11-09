@@ -2,35 +2,38 @@ package br.gov.cesarschool.poo.bonusvendas.negocio.geral;
 
 public class ValidadorCPF {
 
-	public static boolean ehCpfValido(String CPF) {
-		if (CPF == null || CPF.length() != 11)
+	private ValidadorCPF() {
+	}
+
+	public static boolean ehCpfValido(String cpf) {
+		boolean isValid = true;
+
+		if (StringUtil.ehNuloOuBranco(cpf) || cpf.length() != 11
+				|| (cpf.chars().allMatch(Character::isDigit) == false)) {
 			return false;
-
-		if (CPF.matches("(\\d)\\1{10}"))
-			return false;
-
-		int[] digits = new int[11];
-
-		for (int i = 0; i < 11; i++) {
-			digits[i] = CPF.charAt(i) - '0';
 		}
-		int sm = 0;
+
+		int sum = 0;
 		for (int i = 0; i < 9; i++) {
-			sm += digits[i] * (10 - i);
+			sum += Character.getNumericValue(cpf.charAt(i)) * (10 - i);
 		}
+		int resto = sum % 11;
+		int primeiroDigito = resto < 2 ? 0 : 11 - resto;
 
-		int r = 11 - (sm % 11);
-		char dig10 = (r == 10 || r == 11) ? '0' : (char) (r + '0');
-
-		sm = 0;
+		sum = 0;
 		for (int i = 0; i < 10; i++) {
-			sm += digits[i] * (11 - i);
+			sum += Character.getNumericValue(cpf.charAt(i)) * (11 - i);
+		}
+		resto = sum % 11;
+
+		int segundoDigito = resto < 2 ? 0 : 11 - resto;
+
+		if (cpf.charAt(9) != Character.forDigit(primeiroDigito, 10)
+				|| cpf.charAt(10) != Character.forDigit(segundoDigito, 10)) {
+			isValid = false;
 		}
 
-		r = 11 - (sm % 11);
-		char dig11 = (r == 10 || r == 11) ? '0' : (char) (r + '0');
-
-		return dig10 == CPF.charAt(9) && dig11 == CPF.charAt(10);
+		return isValid;
 	}
 
 }

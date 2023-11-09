@@ -6,40 +6,38 @@ import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 
 public class VendedorDAO {
-	private static final String BRANCO = "";
 	private CadastroObjetos cadastro = new CadastroObjetos(Vendedor.class);
 
-	public boolean incluir(Vendedor prod) {
-		Vendedor prodBusca = buscar(prod.getCpf());
-		if (prodBusca != null) {
+	public boolean incluir(Vendedor vend) {
+		Vendedor vendBusca = buscar(vend.getCpf());
+		if (vendBusca != null) {
 			return false;
 		} else {
-			cadastro.incluir(prod, BRANCO + prod.getCpf());
+			cadastro.incluir(vend, vend.getCpf());
 			return true;
 		}
 	}
 
-	public boolean alterar(Vendedor prod) {
-		Vendedor prodBusca = buscar(prod.getCpf());
-		if (prodBusca == null) {
+	public boolean alterar(Vendedor vend) {
+		Vendedor vendBusca = buscar(vend.getCpf());
+		if (vendBusca == null) {
 			return false;
 		} else {
-			cadastro.alterar(prod, BRANCO + prod.getCpf());
+			cadastro.alterar(vend, vend.getCpf());
 			return true;
 		}
 	}
 
-	public Vendedor buscar(String string) {
-		
-		return (Vendedor) cadastro.buscar(BRANCO + string);
+	public Vendedor buscar(String cpf) {
+		return (Vendedor) cadastro.buscar(cpf);
 	}
 
 	public Vendedor[] buscarTodos() {
 		Serializable[] rets = cadastro.buscarTodos(Vendedor.class);
-		Vendedor[] prods = new Vendedor[rets.length];
+		Vendedor[] vends = new Vendedor[rets.length];
 		for (int i = 0; i < rets.length; i++) {
-			prods[i] = (Vendedor) rets[i];
+			vends[i] = (Vendedor) rets[i];
 		}
-		return prods;
+		return vends;
 	}
 }

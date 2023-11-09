@@ -1,49 +1,51 @@
 package br.gov.cesarschool.poo.bonusvendas.dao;
 
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 
 public class LancamentoBonusDAO {
-	private static final String BRANCO = "";
 	private CadastroObjetos cadastro = new CadastroObjetos(LancamentoBonus.class);
 
-	public boolean incluir(LancamentoBonus prod) {
-		String numeroAsString = String.valueOf(prod.getNumeroCaixaDeBonus());
-		LancamentoBonus prodBusca = buscar(numeroAsString);
-		if (prodBusca != null) {
+	public boolean incluir(LancamentoBonus lancamento) {
+		String idUnico = obterIdUnico(lancamento);
+		LancamentoBonus lancamentoBusca = buscar(idUnico);
+		if (lancamentoBusca != null) {
 			return false;
 		} else {
-			cadastro.incluir(prod, BRANCO + prod.getNumeroCaixaDeBonus());
+			cadastro.incluir(lancamento, idUnico);
 			return true;
 		}
 	}
 
-	public boolean alterar(LancamentoBonus prod) {
-		String numeroAsString = String.valueOf(prod.getNumeroCaixaDeBonus());
-
-		LancamentoBonus prodBusca = buscar(numeroAsString);
-		if (prodBusca == null) {
+	public boolean alterar(LancamentoBonus lancamento) {
+		String idUnico = obterIdUnico(lancamento);
+		LancamentoBonus lancamentoBusca = buscar(idUnico);
+		if (lancamentoBusca == null) {
 			return false;
 		} else {
-			cadastro.alterar(prod, BRANCO + prod.getNumeroCaixaDeBonus());
+			cadastro.alterar(lancamento, idUnico);
 			return true;
 		}
 	}
 
-	public LancamentoBonus buscar(String string) {
-
-		return (LancamentoBonus) cadastro.buscar(BRANCO + string);
+	public LancamentoBonus buscar(String codigo) {
+		return (LancamentoBonus) cadastro.buscar(codigo);
 	}
 
 	public LancamentoBonus[] buscarTodos() {
 		Serializable[] rets = cadastro.buscarTodos(LancamentoBonus.class);
-		LancamentoBonus[] prods = new LancamentoBonus[rets.length];
+		LancamentoBonus[] lancamentos = new LancamentoBonus[rets.length];
 		for (int i = 0; i < rets.length; i++) {
-
-			prods[i] = (LancamentoBonus) rets[i];
+			lancamentos[i] = (LancamentoBonus) rets[i];
 		}
-		return prods;
+		return lancamentos;
+	}
+
+	private String obterIdUnico(LancamentoBonus lancamento) {
+		DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		return lancamento.getNumeroCaixaDeBonus() + lancamento.getDataHoraLancamento().format(customFormatter);
 	}
 }
