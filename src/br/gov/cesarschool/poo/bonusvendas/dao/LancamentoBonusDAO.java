@@ -1,51 +1,50 @@
 package br.gov.cesarschool.poo.bonusvendas.dao;
 
-import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
 
 public class LancamentoBonusDAO {
-	private CadastroObjetos cadastro = new CadastroObjetos(LancamentoBonus.class);
+	private DAOGenerico dao;
+
+	public LancamentoBonusDAO() {
+		this.dao = new DAOGenerico(LancamentoBonus.class);
+	}
 
 	public boolean incluir(LancamentoBonus lancamento) {
-		String idUnico = obterIdUnico(lancamento);
+		String idUnico = lancamento.getIdUnico();
 		LancamentoBonus lancamentoBusca = buscar(idUnico);
 		if (lancamentoBusca != null) {
 			return false;
 		} else {
-			cadastro.incluir(lancamento, idUnico);
+			dao.incluir(lancamento);
 			return true;
 		}
 	}
 
 	public boolean alterar(LancamentoBonus lancamento) {
-		String idUnico = obterIdUnico(lancamento);
+		String idUnico = lancamento.getIdUnico();
 		LancamentoBonus lancamentoBusca = buscar(idUnico);
 		if (lancamentoBusca == null) {
 			return false;
 		} else {
-			cadastro.alterar(lancamento, idUnico);
+			dao.alterar(lancamento);
 			return true;
 		}
 	}
 
 	public LancamentoBonus buscar(String codigo) {
-		return (LancamentoBonus) cadastro.buscar(codigo);
+		return (LancamentoBonus) dao.buscar(codigo);
 	}
 
 	public LancamentoBonus[] buscarTodos() {
-		Serializable[] rets = cadastro.buscarTodos(LancamentoBonus.class);
-		LancamentoBonus[] lancamentos = new LancamentoBonus[rets.length];
-		for (int i = 0; i < rets.length; i++) {
-			lancamentos[i] = (LancamentoBonus) rets[i];
+		Registro[] registros = dao.buscarTodos();
+		LancamentoBonus[] lancamentos = new LancamentoBonus[registros.length];
+		for (int i = 0; i < registros.length; i++) {
+			lancamentos[i] = (LancamentoBonus) registros[i];
 		}
 		return lancamentos;
 	}
 
-	private String obterIdUnico(LancamentoBonus lancamento) {
-		DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-		return lancamento.getNumeroCaixaDeBonus() + lancamento.getDataHoraLancamento().format(customFormatter);
-	}
 }

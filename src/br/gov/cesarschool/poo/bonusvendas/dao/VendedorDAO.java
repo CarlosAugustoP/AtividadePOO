@@ -1,43 +1,45 @@
 package br.gov.cesarschool.poo.bonusvendas.dao;
 
-import java.io.Serializable;
-
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
 
 public class VendedorDAO {
-	private CadastroObjetos cadastro = new CadastroObjetos(Vendedor.class);
+	private DAOGenerico dao;
 
-	public boolean incluir(Vendedor vend) {
-		Vendedor vendBusca = buscar(vend.getCpf());
-		if (vendBusca != null) {
-			return false;
-		} else {
-			cadastro.incluir(vend, vend.getCpf());
-			return true;
-		}
-	}
+    public VendedorDAO() {
+        this.dao = new DAOGenerico(Vendedor.class);
+    }
 
-	public boolean alterar(Vendedor vend) {
-		Vendedor vendBusca = buscar(vend.getCpf());
-		if (vendBusca == null) {
-			return false;
-		} else {
-			cadastro.alterar(vend, vend.getCpf());
-			return true;
-		}
-	}
+    public boolean incluir(Vendedor vend) {
+        Vendedor vendBusca = buscar(vend.getCpf());
+        if (vendBusca != null) {
+            return false;
+        } else {
+            dao.incluir(vend);
+            return true;
+        }
+    }
 
-	public Vendedor buscar(String cpf) {
-		return (Vendedor) cadastro.buscar(cpf);
-	}
+    public boolean alterar(Vendedor vend) {
+        Vendedor vendBusca = buscar(vend.getCpf());
+        if (vendBusca == null) {
+            return false;
+        } else {
+            dao.alterar(vend);
+            return true;
+        }
+    }
 
-	public Vendedor[] buscarTodos() {
-		Serializable[] rets = cadastro.buscarTodos(Vendedor.class);
-		Vendedor[] vends = new Vendedor[rets.length];
-		for (int i = 0; i < rets.length; i++) {
-			vends[i] = (Vendedor) rets[i];
-		}
-		return vends;
-	}
+    public Vendedor buscar(String cpf) {
+        return (Vendedor) dao.buscar(cpf);
+    }
+
+    public Vendedor[] buscarTodos() {
+        Registro[] registros = dao.buscarTodos();
+        Vendedor[] vends = new Vendedor[registros.length];
+        for (int i = 0; i < registros.length; i++) {
+            vends[i] = (Vendedor) registros[i];
+        }
+        return vends;
+    }
 }
