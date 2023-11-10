@@ -10,6 +10,7 @@ public class LancamentoBonus extends Registro {
 	private long numeroCaixaDeBonus;
 	private double valor;
 	private LocalDateTime dataHoraLancamento;
+	
 
 	public LancamentoBonus(long numeroCaixaDeBonus, double valor, LocalDateTime dataHoraLancamento) {
 		super();

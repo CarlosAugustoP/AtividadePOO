@@ -12,6 +12,10 @@ public class LancamentoBonusDebito extends LancamentoBonus {
 	    this.tipo = tipo;
 	  }
 
+	public LancamentoBonusDebito(long numeroCaixaDeBonus,double valor,  LocalDateTime dataHoraLancamento, TipoResgate tipo) {
+	    super(numeroCaixaDeBonus, valor, dataHoraLancamento);
+	    this.tipo = tipo;
+	  }
 
 	public TipoResgate getTipoResgate() {
 		return tipo;
