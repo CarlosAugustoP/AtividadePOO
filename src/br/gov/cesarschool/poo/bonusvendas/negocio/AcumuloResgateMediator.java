@@ -9,19 +9,12 @@ import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusDebito;
-import java.time.LocalDate;
-
-import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
-import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
-import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
-import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
 
 public class AcumuloResgateMediator {
 	private static AcumuloResgateMediator instance;
 
-//Atributos privados
 	private CaixaDeBonusDAO repositorioCaixaBonus;
 	private LancamentoBonusDAO repositorioLancamento;
 
@@ -68,27 +61,27 @@ public class AcumuloResgateMediator {
 		}
 	}
 
-	 public String acumularBonus(long num, double valor) {
-		 LocalDateTime dataHoraLancamento = LocalDateTime.now(); //obter a data e hora do lançamento
-		    if (valor <= 0) {
-		      return "Valor menor ou igual a zero";
-		    }
-		    CaixaDeBonus caixaDeBonus = repositorioCaixaBonus.buscar(num);
-		    if (caixaDeBonus == null) {
-		    	return "Caixa de bonus inexistente";
-		    }else {
-		      caixaDeBonus.creditar(valor);
-		      repositorioCaixaBonus.alterar(caixaDeBonus);
-		      //criar um novo lançamento de bônus com a data e hora do lançamento
-		      LancamentoBonusCredito lancamento = new LancamentoBonusCredito(num, valor, dataHoraLancamento);
-		      repositorioLancamento.incluir(lancamento);
-		      return null;
-		   
-		    }
-		  }
+	public String acumularBonus(long num, double valor) {
+		LocalDateTime dataHoraLancamento = LocalDateTime.now(); // obter a data e hora do lançamento
+		if (valor <= 0) {
+			return "Valor menor ou igual a zero";
+		}
+		CaixaDeBonus caixaDeBonus = repositorioCaixaBonus.buscar(num);
+		if (caixaDeBonus == null) {
+			return "Caixa de bonus inexistente";
+		} else {
+			caixaDeBonus.creditar(valor);
+			repositorioCaixaBonus.alterar(caixaDeBonus);
+			// criar um novo lançamento de bônus com a data e hora do lançamento
+			LancamentoBonusCredito lancamento = new LancamentoBonusCredito(num, valor, dataHoraLancamento);
+			repositorioLancamento.incluir(lancamento);
+			return null;
+
+		}
+	}
 
 	public String resgatar(long numeroCaixaDeBonus, double valor, TipoResgate tipo) {
-		 LocalDateTime dataHoraLancamento = LocalDateTime.now();
+		LocalDateTime dataHoraLancamento = LocalDateTime.now();
 		if (valor <= 0) {
 			return "Valor menor ou igual a zero";
 		}
@@ -104,10 +97,29 @@ public class AcumuloResgateMediator {
 
 		caixaDeBonus.debitar(valor); // Usando o método debitar da CaixaDeBonus
 		repositorioCaixaBonus.alterar(caixaDeBonus);
-		LancamentoBonusDebito lancamentoResgate = new LancamentoBonusDebito(tipo, numeroCaixaDeBonus, valor, dataHoraLancamento);
+		LancamentoBonusDebito lancamentoResgate = new LancamentoBonusDebito(tipo, numeroCaixaDeBonus, valor,
+				dataHoraLancamento);
 		repositorioLancamento.incluir(lancamentoResgate);
 
 		return null;
 	}
+
+//	public CaixaDeBonus[] listaCaixaDeBonusPorSaldoMaior(double saldoInicial) {
+//	    CaixaDeBonus[] caixasDeBonus = CaixaDeBonusDAO.buscarTodos();
+//
+//	    if (caixasDeBonus == null || caixasDeBonus.length == 0) {
+//	        return new CaixaDeBonus[0]; // Retornar um array vazio se não houver caixas de bônus
+//	    }
+//
+//	    // Filtrar as caixas de bônus cujos saldos são maiores ou iguais a saldoInicial
+//	    CaixaDeBonus[] caixasFiltradas = Arrays.stream(caixasDeBonus)
+//	            .filter(caixa -> caixa.getSaldo() >= saldoInicial)
+//	            .toArray(CaixaDeBonus[]::new);
+//
+//	    // Use a classe Ordenadora para ordenar as caixas de bônus por saldo em ordem decrescente
+//	    Ordenadora.ordenar(caixasFiltradas, ComparadorCaixaDeBonusSaldoDec.getInstance());
+//
+//	    return caixasFiltradas;
+//	}
 
 }

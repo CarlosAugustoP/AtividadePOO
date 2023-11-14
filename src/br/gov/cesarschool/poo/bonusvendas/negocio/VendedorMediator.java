@@ -133,5 +133,18 @@ public class VendedorMediator {
 
 		return vendedores;
 	}
+	public Vendedor[] gerarListagemClienteOrdenadaPorRenda() {
+	    Vendedor[] vendedores = repositorioVendedor.buscarTodos();
+
+	    // Verifique se há vendedores para ordenar
+	    if (vendedores == null || vendedores.length == 0) {
+	        return new Vendedor[0];
+	    }
+
+	    Ordenadora.ordenar(vendedores, ComparadorVendedorRenda.getInstance());
+
+	    return vendedores;
+	}
+
 
 }
