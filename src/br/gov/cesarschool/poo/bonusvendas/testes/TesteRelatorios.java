@@ -1,7 +1,6 @@
 package br.gov.cesarschool.poo.bonusvendas.testes;
 
 import java.io.File;
-
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 import java.time.LocalDate;
@@ -14,7 +13,6 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
@@ -204,8 +202,7 @@ public class TesteRelatorios extends TesteGeral {
 		lancs.add(new LancamentoBonusDebito(2, VALOR_MIL, dh2, TipoResgate.PRODUTO));
 		for (Object object : lancs) {
 			LancamentoBonus lanc = (LancamentoBonus) object;
-//			CadastroObjetos cadastroLanc = null;
-//			cadastroLanc.incluir(lanc, lanc.getIdUnico());
+			cadastroLanc.incluir(lanc, lanc.getIdUnico());
 		}
 		LancamentoBonus[] lancsRet = AcumuloResgateMediator.getInstancia().listaLancamentosPorFaixaData(d1, d2);
 		Assertions.assertNotNull(lancsRet);
