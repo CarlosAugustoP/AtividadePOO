@@ -3,14 +3,20 @@ package br.gov.cesarschool.poo.bonusvendas.negocio;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.entidade.CaixaDeBonus;
+import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonus;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusCredito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.LancamentoBonusDebito;
 import br.gov.cesarschool.poo.bonusvendas.entidade.TipoResgate;
 import br.gov.cesarschool.poo.bonusvendas.entidade.Vendedor;
+import br.gov.cesarschool.poo.bonusvendas.util.Ordenadora;
 
 public class AcumuloResgateMediator {
 	private static AcumuloResgateMediator instance;
@@ -104,22 +110,46 @@ public class AcumuloResgateMediator {
 		return null;
 	}
 
-//	public CaixaDeBonus[] listaCaixaDeBonusPorSaldoMaior(double saldoInicial) {
-//	    CaixaDeBonus[] caixasDeBonus = CaixaDeBonusDAO.buscarTodos();
-//
-//	    if (caixasDeBonus == null || caixasDeBonus.length == 0) {
-//	        return new CaixaDeBonus[0]; // Retornar um array vazio se não houver caixas de bônus
-//	    }
-//
-//	    // Filtrar as caixas de bônus cujos saldos são maiores ou iguais a saldoInicial
-//	    CaixaDeBonus[] caixasFiltradas = Arrays.stream(caixasDeBonus)
-//	            .filter(caixa -> caixa.getSaldo() >= saldoInicial)
-//	            .toArray(CaixaDeBonus[]::new);
-//
-//	    // Use a classe Ordenadora para ordenar as caixas de bônus por saldo em ordem decrescente
-//	    Ordenadora.ordenar(caixasFiltradas, ComparadorCaixaDeBonusSaldoDec.getInstance());
-//
-//	    return caixasFiltradas;
-//	}
+	public CaixaDeBonus[] listaCaixaDeBonusPorSaldoMaior(double saldoInicial) {
+
+		CaixaDeBonus[] todasCaixas = repositorioCaixaBonus.buscarTodos();
+
+		CaixaDeBonus[] caixasFiltradas = Arrays.stream(todasCaixas).filter(caixa -> caixa.getSaldo() >= saldoInicial)
+				.toArray(CaixaDeBonus[]::new);
+
+		// caixasFiltradas é um subtipo de Object ent n precisa de cast,
+		// ComparadorCaixaDeBonusSaldoDec.getInstance é de uma classe
+		// que implementa Comparador e tem uma comparação propria por isso passa como
+		// parametro
+		Ordenadora.ordenar(caixasFiltradas, ComparadorCaixaDeBonusSaldoDec.getInstance());
+
+		return caixasFiltradas;
+	}
+
+	// ve se da pra ignorar o tanto de warning
+	public LancamentoBonus[] listaLancamentosPorFaixaData(LocalDate d1, LocalDate d2) {
+		// Obter todos os lançamentos do DAO
+		LancamentoBonus[] todosLancamentos = repositorioLancamento.buscarTodos();
+
+		// Filtrar lançamentos com base nas datas
+
+		List lancamentosFiltrados = new ArrayList();
+		for (Object lancamento : todosLancamentos) {
+			LocalDate dataLancamento = ((LancamentoBonus) lancamento).getDataHoraLancamento().toLocalDate();
+
+			if ((dataLancamento.isEqual(d1) || dataLancamento.isAfter(d1))
+					&& (dataLancamento.isEqual(d2) || dataLancamento.isBefore(d2))) {
+				lancamentosFiltrados.add(lancamento);
+			}
+		}
+
+		// Ordenar a lista filtrada por data e hora em ordem decrescente
+		Collections.sort(lancamentosFiltrados, ComparadorLancamentoBonusDHDec.getInstance());
+
+		// Converter a lista ordenada para um array
+		LancamentoBonus[] resultado = (LancamentoBonus[]) lancamentosFiltrados.toArray(new LancamentoBonus[0]);
+
+		return resultado;
+	}
 
 }
