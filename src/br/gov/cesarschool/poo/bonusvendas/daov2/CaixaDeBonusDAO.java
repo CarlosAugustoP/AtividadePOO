@@ -12,7 +12,7 @@ public class CaixaDeBonusDAO {
         this.dao = new DAOGenerico(CaixaDeBonus.class, "Caixa");
     }
 
-    public void incluir(CaixaDeBonus caixa) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente{
+    public void incluir(CaixaDeBonus caixa) throws ExcecaoObjetoJaExistente{
         dao.incluir(caixa); 
     }
 

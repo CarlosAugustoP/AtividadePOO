@@ -42,7 +42,7 @@ public class AcumuloResgateMediator {
 		return instance;
 	}
 
-	public long gerarCaixaDeBonus(Vendedor vendedor) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
+	public long gerarCaixaDeBonus(Vendedor vendedor) throws ExcecaoObjetoJaExistente {
 		String cpf = vendedor.getCpf();
 		cpf = cpf.replaceAll("[^0-9]", "");
 
