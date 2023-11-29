@@ -29,18 +29,11 @@ public class AcumuloResgateMediator {
 	private CaixaDeBonusDAO repositorioCaixaBonus;
 	private LancamentoBonusDAO repositorioLancamento;
 
-	// Construtor privado
 	private AcumuloResgateMediator() {
-		// Inicializa os atributos com novas instâncias
 		this.repositorioCaixaBonus = new CaixaDeBonusDAO();
 		this.repositorioLancamento = new LancamentoBonusDAO();
 	}
 
-	/***
-	 * Método público para obter a instância única
-	 * 
-	 * @return
-	 */
 	public static AcumuloResgateMediator getInstancia() {
 		if (instance == null) {
 			instance = new AcumuloResgateMediator();
@@ -50,94 +43,85 @@ public class AcumuloResgateMediator {
 	}
 
 	public long gerarCaixaDeBonus(Vendedor vendedor) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
-	    String cpf = vendedor.getCpf();
-	    cpf = cpf.replaceAll("[^0-9]", "");
+		String cpf = vendedor.getCpf();
+		cpf = cpf.replaceAll("[^0-9]", "");
 
-	    if (cpf.length() < 2) {
-	        return 0;
-	    }
+		if (cpf.length() < 2) {
+			return 0;
+		}
 
-	    String cpfNumerico = cpf.substring(0, cpf.length() - 2);
-	    String hoje = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-	    String numCaixaDeBonusString = cpfNumerico + hoje;
+		String cpfNumerico = cpf.substring(0, cpf.length() - 2);
+		String hoje = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		String numCaixaDeBonusString = cpfNumerico + hoje;
 
-	    try {
-	        long numCaixaDeBonus = Long.parseLong(numCaixaDeBonusString);
+		try {
+			long numCaixaDeBonus = Long.parseLong(numCaixaDeBonusString);
 
-	        if (repositorioCaixaBonus.buscar(numCaixaDeBonus) == null) {
-	            CaixaDeBonus caixa = new CaixaDeBonus(numCaixaDeBonus);
+			repositorioCaixaBonus.incluir(new CaixaDeBonus(numCaixaDeBonus));
 
-	            // Modificação: Não temos retorno da inclusão, então não precisamos verificar
-	            repositorioCaixaBonus.incluir(caixa);
-
-	            return numCaixaDeBonus;
-	        } else {
-	            // Lançar exceção se a caixa de bônus já existir
-	            throw new ExcecaoObjetoJaExistente("Caixa de bônus já existe");
-	        }
-	    } catch (NumberFormatException e) {
-	        return 0;
-	    }
+			return numCaixaDeBonus;
+		} catch (NumberFormatException e) {
+			throw new ExcecaoObjetoJaExistente("Erro na geração do número da caixa de bônus");
+		}
 	}
 
 	public void acumularBonus(long num, double valor) throws ExcecaoObjetoNaoExistente, ExcecaoValidacao {
-	    LocalDateTime dataHoraLancamento = LocalDateTime.now(); // obter a data e hora do lançamento
+		LocalDateTime dataHoraLancamento = LocalDateTime.now();
 
-	    if (valor <= 0) {
-	        throw new ExcecaoValidacao("Valor menor ou igual a zero");
-	    }
+		if (valor <= 0) {
+			throw new ExcecaoValidacao("Valor menor ou igual a zero");
+		}
 
-	    CaixaDeBonus caixaDeBonus = repositorioCaixaBonus.buscar(num);
+		CaixaDeBonus caixaDeBonus = repositorioCaixaBonus.buscar(num);
 
-	    if (caixaDeBonus == null) {
-	        throw new ExcecaoObjetoNaoExistente("Caixa de bonus inexistente");
-	    } else {
-	        try {
-	            caixaDeBonus.creditar(valor);
-	            repositorioCaixaBonus.alterar(caixaDeBonus);
+		//ver se precisa tirar
+		if (caixaDeBonus == null) {
+			throw new ExcecaoObjetoNaoExistente("Caixa de bonus inexistente");
+		} else {
+			try {
+				caixaDeBonus.creditar(valor);
+				repositorioCaixaBonus.alterar(caixaDeBonus);
 
-	            // criar um novo lançamento de bônus com a data e hora do lançamento
-	            LancamentoBonusCredito lancamento = new LancamentoBonusCredito(num, valor, dataHoraLancamento);
-	            repositorioLancamento.incluir(lancamento);
-	        } catch (ExcecaoObjetoJaExistente e) {
-	            // Tratar a exceção de forma apropriada, lançando ExcecaoValidacao com a mensagem específica
-	            throw new ExcecaoValidacao("Inconsistência no cadastro de lançamento");
-	        }
-	    }
+				LancamentoBonusCredito lancamento = new LancamentoBonusCredito(num, valor, dataHoraLancamento);
+				repositorioLancamento.incluir(lancamento);
+			} catch (ExcecaoObjetoJaExistente e) {
+
+				throw new ExcecaoValidacao("Inconsistência no cadastro de lançamento");
+			}
+		}
 	}
 
 	public void resgatar(long numeroCaixaDeBonus, double valor, TipoResgate tipo)
-	        throws ExcecaoObjetoNaoExistente, ExcecaoValidacao {
+			throws ExcecaoObjetoNaoExistente, ExcecaoValidacao {
 
-	    LocalDateTime dataHoraLancamento = LocalDateTime.now();
+		LocalDateTime dataHoraLancamento = LocalDateTime.now();
 
-	    if (valor <= 0) {
-	        throw new ExcecaoValidacao("Valor menor ou igual a zero");
-	    }
+		if (valor <= 0) {
+			throw new ExcecaoValidacao("Valor menor ou igual a zero");
+		}
 
-	    CaixaDeBonus caixaDeBonus = repositorioCaixaBonus.buscar(numeroCaixaDeBonus);
+		CaixaDeBonus caixaDeBonus = repositorioCaixaBonus.buscar(numeroCaixaDeBonus);
 
-	    if (caixaDeBonus == null) {
-	        // Removida a mensagem de erro, pois a busca já lança a exceção
-	        throw new ExcecaoObjetoNaoExistente();
-	    }
+		if (caixaDeBonus == null) {
+			throw new ExcecaoObjetoNaoExistente();
+		}
 
-	    if (caixaDeBonus.getSaldo() < valor) {
-	        throw new ExcecaoValidacao("Saldo insuficiente");
-	    }
+		if (caixaDeBonus.getSaldo() < valor) {
+			throw new ExcecaoValidacao("Saldo insuficiente");
+		}
 
-	    try {
-	        caixaDeBonus.debitar(valor);
-	        repositorioCaixaBonus.alterar(caixaDeBonus);
+		try {
+			caixaDeBonus.debitar(valor);
+			repositorioCaixaBonus.alterar(caixaDeBonus);
 
-	        LancamentoBonusDebito lancamentoResgate = new LancamentoBonusDebito(tipo, numeroCaixaDeBonus, valor,
-	                dataHoraLancamento);
-	        repositorioLancamento.incluir(lancamentoResgate);
+			LancamentoBonusDebito lancamentoResgate = new LancamentoBonusDebito(tipo, numeroCaixaDeBonus, valor,
+					dataHoraLancamento);
+			repositorioLancamento.incluir(lancamentoResgate);
 
-	    } catch (ExcecaoObjetoJaExistente e) {
-	        // Em teoria, essa exceção nunca deveria ocorrer, mas como está declarada, deve ser tratada
-	        throw new ExcecaoValidacao("Inconsistência no cadastro de lançamento");
-	    }
+		} catch (ExcecaoObjetoJaExistente e) {
+			 
+			throw new ExcecaoValidacao("Inconsistência no cadastro de lançamento");
+		}
 	}
 
 	public CaixaDeBonus[] listaCaixaDeBonusPorSaldoMaior(double saldoInicial) {

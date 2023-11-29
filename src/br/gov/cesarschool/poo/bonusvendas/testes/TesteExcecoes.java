@@ -142,7 +142,7 @@ public class TesteExcecoes extends TesteGeral {
 		        		CIDADE_VALIDA, ESTADO_VALIDO, PAIS_VALIDO));
 		try {
 			numeroRet = AcumuloResgateMediator.getInstancia().gerarCaixaDeBonus(vend);
-		} catch (ExcecaoObjetoJaExistente e) {
+		} catch (ExcecaoObjetoJaExistente | ExcecaoObjetoNaoExistente e) {
 			Assertions.fail(e);
 		}
 		Assertions.assertEquals(numeroGerado,  numeroRet);
@@ -177,6 +177,8 @@ public class TesteExcecoes extends TesteGeral {
 			Assertions.fail("ExcecaoObjetoJaExistente deveria ter sido lançada!");
 		} catch (ExcecaoObjetoJaExistente e) {
 			Assertions.assertEquals("Caixa ja existente", e.getMessage());
+		} catch (ExcecaoObjetoNaoExistente e) {
+			
 		}
 		Assertions.assertEquals(0,  numeroRet);
 		int qtdArqsCaixaDeBonus = obterQtdArquivosDir(DIR_CAIXA_DE_BONUS);
@@ -226,6 +228,9 @@ public class TesteExcecoes extends TesteGeral {
 			mediator.acumularBonus(numero, -100.0);
 			Assertions.fail("1 - ExcecaoValidacao deveria ter sido lançada!");
 		} catch (ExcecaoValidacao e) {
+			/**
+			 * 
+			 */
 			Assertions.assertEquals(VALOR_MENOR_OU_IGUAL_A_ZERO, e.getMessage());
 		} catch (Exception e) {
 			Assertions.fail(e);
