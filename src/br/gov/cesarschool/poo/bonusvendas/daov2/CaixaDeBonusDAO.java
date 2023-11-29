@@ -6,49 +6,34 @@ import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 
 public class CaixaDeBonusDAO {
-	private static final String BRANCO = "";
-	private DAOGenerico dao;
+    private DAOGenerico dao; 
 
-	public CaixaDeBonusDAO() {
-	    this.dao = new DAOGenerico(CaixaDeBonus.class, "Vendedor", "Lancamento");
-	}
-
-	public void incluir(CaixaDeBonus caixaBonus) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
-        CaixaDeBonus caixaBonusBusca = buscar(caixaBonus.getNumero());
-
-        if (caixaBonusBusca != null) {
-            throw new ExcecaoObjetoJaExistente("Caixa de Bonus ja existente");
-        } else {
-            dao.incluir(caixaBonus);
-        }
+    public CaixaDeBonusDAO() {
+        this.dao = new DAOGenerico(CaixaDeBonus.class, "Caixa");
     }
 
-	public void alterar(CaixaDeBonus caixaBonus) throws ExcecaoObjetoNaoExistente {
-        CaixaDeBonus caixaBonusBusca = buscar(caixaBonus.getNumero());
-
-        if (caixaBonusBusca == null) {
-            throw new ExcecaoObjetoNaoExistente("Caixa de Bonus nao existente");
-        } else {
-            dao.alterar(caixaBonus);
-        }
+    public void incluir(CaixaDeBonus caixa) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente{
+        dao.incluir(caixa); 
     }
 
-	public CaixaDeBonus buscar(long codigo) throws ExcecaoObjetoNaoExistente {
-        CaixaDeBonus caixa = (CaixaDeBonus) dao.buscar(BRANCO + codigo);
-
-        if (caixa == null) {
-            throw new ExcecaoObjetoNaoExistente("Caixa de Bonus nao existente");
-        }
-
-        return caixa;
+    public void alterar(CaixaDeBonus caixa) throws ExcecaoObjetoNaoExistente{
+        dao.alterar(caixa);
     }
 
-	public CaixaDeBonus[] buscarTodos() {
-		Registro[] registros = dao.buscarTodos();
-		CaixaDeBonus[] caixaBonus = new CaixaDeBonus[registros.length];
-		for (int i = 0; i < registros.length; i++) {
-			caixaBonus[i] = (CaixaDeBonus) registros[i];
-		}
-		return caixaBonus;
-	}
+    public void excluir(long numero) throws ExcecaoObjetoNaoExistente {
+        dao.excluir(numero + "");
+    }
+
+    public CaixaDeBonus buscar(long numero) throws ExcecaoObjetoNaoExistente {
+        return (CaixaDeBonus) dao.buscar(numero + "");
+    }
+
+    public CaixaDeBonus[] buscarTodos() {
+        Registro[] rets = dao.buscarTodos();
+        CaixaDeBonus[] caixas = new CaixaDeBonus[rets.length];
+        for(int i=0; i<rets.length; i++) {
+            caixas[i] = (CaixaDeBonus)rets[i];
+        }
+        return caixas;
+    } 
 }

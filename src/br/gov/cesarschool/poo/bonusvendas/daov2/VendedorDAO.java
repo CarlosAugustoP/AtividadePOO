@@ -5,50 +5,43 @@ import br.gov.cesarschool.poo.bonusvendas.entidade.geral.Registro;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 
-
 public class VendedorDAO {
-	private DAOGenerico dao;
+    private DAOGenerico dao;
 
-	public VendedorDAO() {
-	    this.dao = new DAOGenerico(Vendedor.class, "CaixaDeBonusDAO", "LancamentoBonusDAO");
-	}
-
-	public void incluir(Vendedor vend) throws ExcecaoObjetoJaExistente, ExcecaoObjetoNaoExistente {
-        Vendedor vendBusca = buscar(vend.getCpf());
-
-        if (vendBusca != null) {
-            throw new ExcecaoObjetoJaExistente("Vendedor ja existente");
-        } else {
-            dao.incluir(vend);
-        }
+    // Construtor
+    public VendedorDAO() {
+        this.dao = new DAOGenerico(Vendedor.class, "Vendedor");
     }
 
-	public void alterar(Vendedor vend) throws ExcecaoObjetoNaoExistente {
-        Vendedor vendBusca = buscar(vend.getCpf());
-
-        if (vendBusca == null) {
-            throw new ExcecaoObjetoNaoExistente("Vendedor nao existente");
-        } else {
-            dao.alterar(vend);
-        }
+    // Incluir um vendedor
+    public void incluir(Vendedor vendedor) throws ExcecaoObjetoJaExistente {
+        dao.incluir(vendedor);
     }
 
+    // Alterar um vendedor
+    public void alterar(Vendedor vendedor) throws ExcecaoObjetoNaoExistente {
+        dao.alterar(vendedor);
+    }
+
+    // Excluir um vendedor pelo CPF
+    public void excluir(String cpf) throws ExcecaoObjetoNaoExistente {
+        dao.excluir(cpf);
+    }
+
+    // Buscar um vendedor pelo CPF
     public Vendedor buscar(String cpf) throws ExcecaoObjetoNaoExistente {
-        Vendedor vendedor = (Vendedor) dao.buscar(cpf);
-
-        if (vendedor == null) {
-            throw new ExcecaoObjetoNaoExistente("Vendedor nao existente");
-        }
-
-        return vendedor;
+        return (Vendedor) dao.buscar(cpf);
     }
 
+    // Buscar todos os vendedores
     public Vendedor[] buscarTodos() {
         Registro[] registros = dao.buscarTodos();
-        Vendedor[] vends = new Vendedor[registros.length];
+        Vendedor[] vendedores = new Vendedor[registros.length];
+        
         for (int i = 0; i < registros.length; i++) {
-            vends[i] = (Vendedor) registros[i];
+            vendedores[i] = (Vendedor) registros[i];
         }
-        return vends;
+        
+        return vendedores;
     }
 }
