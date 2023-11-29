@@ -12,11 +12,11 @@ public class CaixaDeBonusDAO {
         this.dao = new DAOGenerico(CaixaDeBonus.class, "Caixa");
     }
 
-    public void incluir(CaixaDeBonus caixa) throws ExcecaoObjetoJaExistente{
+    public void incluir(CaixaDeBonus caixa) throws ExcecaoObjetoJaExistente {
         dao.incluir(caixa); 
     }
 
-    public void alterar(CaixaDeBonus caixa) throws ExcecaoObjetoNaoExistente{
+    public void alterar(CaixaDeBonus caixa) throws ExcecaoObjetoNaoExistente {
         dao.alterar(caixa);
     }
 
@@ -31,9 +31,13 @@ public class CaixaDeBonusDAO {
     public CaixaDeBonus[] buscarTodos() {
         Registro[] rets = dao.buscarTodos();
         CaixaDeBonus[] caixas = new CaixaDeBonus[rets.length];
-        for(int i=0; i<rets.length; i++) {
-            caixas[i] = (CaixaDeBonus)rets[i];
+
+        int i = 0;
+        while (i < rets.length) {
+            caixas[i] = (CaixaDeBonus) rets[i];
+            i++;
         }
+
         return caixas;
     } 
 }

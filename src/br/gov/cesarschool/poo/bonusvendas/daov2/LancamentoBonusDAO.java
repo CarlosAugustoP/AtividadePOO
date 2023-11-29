@@ -31,9 +31,13 @@ public class LancamentoBonusDAO {
     public LancamentoBonus[] buscarTodos() {
         Registro[] registros = dao.buscarTodos();
         LancamentoBonus[] lancamentos = new LancamentoBonus[registros.length];
-        for (int i = 0; i < registros.length; i++) {
+
+        int i = 0;
+        while (i < registros.length) {
             lancamentos[i] = (LancamentoBonus) registros[i];
+            i++;
         }
+
         return lancamentos;
     }
 }

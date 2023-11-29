@@ -1,4 +1,4 @@
-package br.gov.cesarschool.poo.bonusvendas.negociov2;
+	package br.gov.cesarschool.poo.bonusvendas.negociov2;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -82,7 +82,7 @@ public class VendedorMediator {
 	}
 
 	public long incluir(Vendedor vendedor)
-			throws ExcecaoObjetoJaExistente, ExcecaoValidacao, ExcecaoObjetoNaoExistente {
+			throws ExcecaoObjetoJaExistente, ExcecaoValidacao {
 
 		try {
 			validar(vendedor);

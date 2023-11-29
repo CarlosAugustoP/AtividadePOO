@@ -23,9 +23,8 @@ import br.gov.cesarschool.poo.bonusvendas.excecoes.ErroValidacao;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoJaExistente;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoObjetoNaoExistente;
 import br.gov.cesarschool.poo.bonusvendas.excecoes.ExcecaoValidacao;
-import br.gov.cesarschool.poo.bonusvendas.negocio.ResultadoInclusaoVendedor;
-import br.gov.cesarschool.poo.bonusvendas.negociov2.VendedorMediator;
 import br.gov.cesarschool.poo.bonusvendas.negociov2.AcumuloResgateMediator;
+import br.gov.cesarschool.poo.bonusvendas.negociov2.VendedorMediator;
 import x.y.z.w.k.Glosb;
 
 public class TesteExcecoes extends TesteGeral {
