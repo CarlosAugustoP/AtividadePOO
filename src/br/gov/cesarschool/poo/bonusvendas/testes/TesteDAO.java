@@ -12,7 +12,6 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.gov.cesarschool.poo.bonusvendas.dao.CaixaDeBonusDAO;
 import br.gov.cesarschool.poo.bonusvendas.dao.DAOGenerico;
 import br.gov.cesarschool.poo.bonusvendas.dao.LancamentoBonusDAO;
